@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/partenaire', 'PartenaireController@index');
+Route::get('/show_partenaire/{id}', 'PartenaireController@show');
+Route::get('/partenaire/{id}/{nom}/{bool}', 'PartenaireController@index');
