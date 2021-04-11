@@ -35,7 +35,7 @@
       <div class="col-sm-6">
         <button type="button" id="actif" name="actif" class="btn btn-primary">Activé</button>
         <button type="button" id="inactif" name="inactif" class="btn btn-secondary">Désactivé</button>
-        <input type="hidden" class="form-control" id="inputBool" name="inputBool" >
+        <input type="hidden" class="form-control" id="inputBool" name="inputBool" value="">
       </div>
     </div>
   <div class="form-group row text-center">
@@ -58,16 +58,15 @@
               Site : {{ $client->url }}<br>
               @if ($client->active == 0)
                 Etat : Actif
-                <button type="submit" class="btn btn-secondary">Désactiver</button>
+                <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-secondary" value="Désactiver"><br>
               @else
                 Etat : Inactif
-                <button type="submit" class="btn btn-primary">Activer</button>
+                <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-primary" value="Activer"><br>
               @endif
                 <a href="/show_partenaire/{{$client->client_id}}"class="btn btn-info">Consulter</a><br><br>
             </div>
           </div>
         </div>
-
     @endforeach
   </div>
   {{ $clients->links() }}
@@ -80,6 +79,57 @@
 @section('script')
 <script type="text/javascript">
   $(document).ready(function(){
+
+    $("input[name='toggleA']").click(function(){
+      var stringA = $(this).attr('id');
+      var selectorA = '#'+stringA
+      var stringidA = stringA.split('toggleA');
+      var idA = stringidA[1];
+      var valueA = $(selectorA).val();
+      var boolA = '';
+
+      if(valueA === 'Activer')
+      {
+        boolA = 0;
+      }
+      else
+      {
+        boolA = 1;
+      }
+
+      $.ajax({
+      method: "GET",
+      url: "/update_partenaire_bool",
+      data: { id: idA, bool: boolA },
+      success: function(data){
+        location.reload();
+      }
+      });
+
+    });
+
+    $("#actif").click(function(){
+      var selected = $(this).attr("class");
+      $(this).removeClass(selected);
+      $(this).addClass('btn btn-primary');
+      var classI = $('#inactif').attr("class");
+      $('#inactif').removeClass(classI);
+      $('#inactif').addClass('btn btn-light');
+      $('#inputBool').val('');
+      $('#inputBool').val(0);
+    });
+
+    $("#inactif").click(function(){
+      var selected = $(this).attr("class");
+      $(this).removeClass(selected);
+      $(this).addClass('btn btn-primary');
+      var classA = $('#actif').attr("class");
+      $('#actif').removeClass(classA);
+      $('#actif').addClass('btn btn-light');
+      $('#inputBool').val('');
+      $('#inputBool').val(1);
+    });
+
     $("#searchBtn").click(function(){
       var id = $("#inputId").val();
       var nom = $("#inputNom").val();
@@ -96,7 +146,6 @@
       {
         bool = "nil";
       }
-
       $.ajax({
       method: "GET",
       url: "/partenaire/"+id+"/"+nom+"/"+bool+"/",

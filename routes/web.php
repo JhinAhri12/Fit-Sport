@@ -24,3 +24,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/partenaire', 'PartenaireController@index');
 Route::get('/show_partenaire/{id}', 'PartenaireController@show');
 Route::get('/partenaire/{id}/{nom}/{bool}', 'PartenaireController@index');
+
+Route::get('/update_partenaire_bool','PartenaireController@updatePartenaireBool');
+Route::get('/update_grant_bool','PartenaireController@updateGrantBool');

@@ -16,9 +16,12 @@ class PartenaireController extends Controller
       {
         $id = $request['id'];
         $nom = $request['nom'];
-        $bool = $request['bool'];
-        return view('partenaire.index', ['clients' => DB::table('api_clients')->orWhere('client_id', '=', $id)
-        ->orWhere('client_name', '=', $nom)->where('active', '=', $bool)->paginate(6)]);
+        $bool = (int) $request['bool'];
+
+        $clients = DB::table('api_clients')->orWhere('client_id', '=', $id)
+        ->orWhere('client_name', '=', $nom)->orWhere('active', '=', $bool)->paginate(6);
+
+        return view('partenaire.index')->with(compact('clients'));
       }
       else
       {
@@ -46,8 +49,27 @@ class PartenaireController extends Controller
       ->where('client_id','=',$ids)->get();
 
       return view('partenaire.show')->with(compact('installs','clients','grants'));
-
-
-
     }
+
+    public function updatePartenaireBool(Request $request)
+    {
+      $id = (int) $request->id;
+      $bool = (int) $request->bool;
+
+      $updateClient = DB::table('api_clients')
+      ->where('client_id', $id)
+      ->update(['active' => $bool]);
+    }
+
+    public function updateGrantBool(Request $request)
+    {
+      $id = (int) $request->id;
+      $bool = (int) $request->bool;
+
+      $updateClient = DB::table('api_client_grants')
+      ->where('branch_id', $id)
+      ->update(['active' => $bool]);
+    }
+
+
 }
