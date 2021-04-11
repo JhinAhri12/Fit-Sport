@@ -71,5 +71,15 @@ class PartenaireController extends Controller
       ->update(['active' => $bool]);
     }
 
-
+    public function updateInstallBool(Request $request)
+    {
+      $id = (int) $request->id;
+      $bool = (int) $request->bool;
+      $stringChamp = preg_split('/\d/',$request->champ[0]);
+      $champ = $stringChamp[0];
+  
+      $updateClient = DB::table('api_install_perm')
+      ->where('install_id', $id)
+      ->update([$champ => $bool]);
+    }
 }

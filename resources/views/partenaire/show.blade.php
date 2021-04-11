@@ -4,6 +4,8 @@
 
 &nbsp;&nbsp;<a href="/partenaire" class="btn btn-info"> Retour à la liste des partenaires</a><br><br>
 
+<div id="refresh1">
+
 <div class="card">
   <div class="card-body">
     <div class="row">
@@ -92,78 +94,79 @@
   <div class="card-body">
     <div class="row">
       @foreach ($installs as $install)
+        <input type="text" id="Idinstall" value="{{ $install->install_id }}" hidden>
       <div class="col-sm-6 text-center">
         @if ($install->members_read == 0)
           Etat : Actif
-          <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+          <input type="submit" id="members_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
         @else
           Etat : Inactif
-          <button type="submit" class="btn btn-primary">Activer</button><br><br>
+          <input type="submit" id="members_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
         @endif
         @if ($install->members_write == 0)
           Etat : Actif
-          <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+          <input type="submit" id="members_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
         @else
           Etat : Inactif
-          <button type="submit" class="btn btn-primary">Activer</button><br><br>
+          <input type="submit" id="members_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
         @endif
         @if ($install->members_add == 0)
           Etat : Actif
-          <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+          <input type="submit" id="members_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
         @else
           Etat : Inactif
-          <button type="submit" class="btn btn-primary">Activer</button><br><br>
+          <input type="submit" id="members_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
         @endif
         @if ($install->members_product_add == 0)
           Etat : Actif
-          <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+          <input type="submit" id="members_product_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
         @else
           Etat : Inactif
-          <button type="submit" class="btn btn-primary">Activer</button><br><br>
+          <input type="submit" id="members_product_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
         @endif
         @if ($install->members_payment_schedules_read == 0)
           Etat : Actif
-          <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+          <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
         @else
           Etat : Inactif
-          <button type="submit" class="btn btn-primary">Activer</button><br><br>
+          <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
         @endif
       </div>
         <div class="col-sm-6 text-center">
           @if ($install->members_statistiques_read == 0)
             Etat : Actif
-            <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+            <input type="submit" id="members_statistiques_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
           @else
             Etat : Inactif
-            <button type="submit" class="btn btn-primary">Activer</button><br><br>
+            <input type="submit" id="members_statistiques_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
           @endif
           @if ($install->members_subscription_read == 0)
             Etat : Actif
-            <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+            <input type="submit" id="members_subscription_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
           @else
             Etat : Inactif
-            <button type="submit" class="btn btn-primary">Activer</button><br><br>
+            <input type="submit" id="members_subscription_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
           @endif
           @if ($install->members_payment_schedules_read == 0)
             Etat : Actif
-            <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+            <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
           @else
             Etat : Inactif
-            <button type="submit" class="btn btn-primary">Activer</button><br><br>
+            <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
           @endif
           @if ($install->payment_schedules_write == 0)
             Etat : Actif
-            <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+            <input type="submit" id="payment_schedules_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
           @else
             Etat : Inactif
-            <button type="submit" class="btn btn-primary">Activer</button><br><br>
+            <input type="submit" id="payment_schedules_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
           @endif
           @if ($install->payment_day_read == 0)
             Etat : Actif
-            <button type="submit" class="btn btn-secondary">Désactiver</button><br><br>
+            <input type="submit" id="payment_day_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
           @else
             Etat : Inactif
-            <button type="submit" class="btn btn-primary">Activer</button><br><br>
+            <input type="submit" id="payment_day_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
           @endif
         </div>
       @endforeach
@@ -171,12 +174,19 @@
   </div>
   </div>
 </div>
+</div>
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
   $(document).ready(function(){
+
+
+window.onload = (event) => {
+console.log('The page has fully loaded');
+};
+
     $("#Permissions").hide();
     $("#PermissionsChange").hide();
 
@@ -188,6 +198,35 @@
     $("#show").click(function(){
       $("#Permissions").show();
       $("#PermissionsChange").show();
+    });
+
+    $("input[name='toggleC']").click(function(){
+      var stringC = $(this).attr('id');
+      var selectorC= '#'+stringC
+      var stringidC = stringC.split('toggleC');
+      var champC = stringC.split('#');
+      var idC = stringidC[1];
+      var valueC = $(selectorC).val();
+      var boolC = '';
+      var id = Number($('#Idinstall').val());
+
+      if(valueC === 'Activer')
+      {
+        boolC = 0;
+      }
+      else
+      {
+        boolC = 1;
+      }
+
+      $.ajax({
+      method: "GET",
+      url: "/update_install_bool",
+      data: { id: id, bool: boolC, champ : champC },
+      success: function(data){
+        $( "#refresh1" ).load(window.location.href + " #refresh1" );
+      }
+      });
     });
 
     $("input[name='toggleB']").click(function(){

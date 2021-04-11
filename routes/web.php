@@ -27,3 +27,4 @@ Route::get('/partenaire/{id}/{nom}/{bool}', 'PartenaireController@index');
 
 Route::get('/update_partenaire_bool','PartenaireController@updatePartenaireBool');
 Route::get('/update_grant_bool','PartenaireController@updateGrantBool');
+Route::get('/update_install_bool','PartenaireController@updateInstallBool');
