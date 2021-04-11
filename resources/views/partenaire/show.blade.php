@@ -47,11 +47,11 @@
         @endforeach
       </div>
         <div class="col-sm-4 text-center">
-
+          <a style="margin-top:30px" href="/sendbasicemail?nom={{ $client->client_name }}"  class="btn btn-danger">Envoyer un Email</a>
         </div>
         <div class="col-sm-4 text-center">
           <button id="show" class="btn btn-info">Afficher les permissions</button><br><br>
-          <button class="btn btn-success">Ajouter</button>
+          <button class="btn btn-success">Ouvrir l'accès à un autre club</button>
         </div>
       @endforeach
     </div>
