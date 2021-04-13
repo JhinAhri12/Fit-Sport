@@ -22,6 +22,7 @@ class ApiClientsGrants extends Migration
         $table->id('branch_id');
         $table->boolean('active');
         $table->text('perms');
+        $table->timestamps();
         // Pas de branche id car branch id est un string !
         });
     }

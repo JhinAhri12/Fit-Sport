@@ -32,9 +32,7 @@ class PartenaireController extends Controller
 
     public function show(Request $request)
     {
-      $url = $request->fullUrl();
-      $id = preg_split('/\w+\:\/\/\w+\:\w+\/\w+\//', $url);
-      $ids = (int) $id[1];
+      $ids = (int) $request->id;
 
       $installs = DB::table('api_install_perm')
       ->select('*')
@@ -49,6 +47,27 @@ class PartenaireController extends Controller
       ->where('client_id','=',$ids)->get();
 
       return view('partenaire.show')->with(compact('installs','clients','grants'));
+    }
+
+    public function create(Request $request)
+    {
+      $perms = $request->perms;
+      $tabJson = json_decode($perms);
+      $club = $request->nom_club;
+      $client = $request->client_id;
+
+     $createPerms = DB::table('api_install_perm')
+      ->insert(['structure'=>$club,'client_id' => $client, 'members_read' => $tabJson->{'members_read'}, 'members_write' => $tabJson->{'members_write'},
+    'members_add' => $tabJson->{'members_add'},'members_product_add' => $tabJson->{'members_product_add'},'members_payment_schedules_read' => $tabJson->{'members_payment_schedules_read'},
+    'members_statistiques_read' => $tabJson->{'members_statistiques_read'},'members_subscription_read' => $tabJson->{'members_subscription_read'},'payment_schedules_read' => $tabJson->{'payment_schedules_read'},
+    'payment_schedules_write' => $tabJson->{'payment_schedules_write'},'payment_day_read' => $tabJson->{'payment_day_read'}, ]);
+
+    $selectLastID = DB::table('api_install_perm')->select('install_id')->orderBy('install_id','DESC')->first();
+
+      $createGrants = DB::table('api_client_grants')
+      ->insert(['install_id'=> $selectLastID->install_id,'client_id' => $client,'perms' => $perms,'active'=>0]);
+
+
     }
 
     public function updatePartenaireBool(Request $request)
@@ -77,7 +96,7 @@ class PartenaireController extends Controller
       $bool = (int) $request->bool;
       $stringChamp = preg_split('/\d/',$request->champ[0]);
       $champ = $stringChamp[0];
-  
+
       $updateClient = DB::table('api_install_perm')
       ->where('install_id', $id)
       ->update([$champ => $bool]);

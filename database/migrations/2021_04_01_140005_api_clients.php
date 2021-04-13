@@ -16,9 +16,7 @@ class ApiClients extends Migration
         //
         Schema::create('Api_Clients', function (Blueprint $table) {
         $table->id('client_id');
-        $table->id('client_name');
-        $table->unsignedBigInteger('users_id')->nullable();
-        $table->foreign('users_id')->references('id')->on('users');
+        $table->text('client_name');
         $table->boolean('active');
         $table->string('client_email')->unique();
         $table->string('short_description');
@@ -28,6 +26,7 @@ class ApiClients extends Migration
         $table->string('dpo');
         $table->string('technical_contact');
         $table->string('commercial_contact');
+        $table->timestamps();
         });
     }
 

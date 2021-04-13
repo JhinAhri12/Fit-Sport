@@ -63,7 +63,7 @@
                 Etat : Inactif
                 <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-primary" value="Activer"><br>
               @endif
-                <a href="/show_partenaire/{{$client->client_id}}"class="btn btn-info">Consulter</a><br><br>
+                <a href="/show_partenaire?id={{$client->client_id}}"class="btn btn-info">Consulter</a><br><br>
             </div>
           </div>
         </div>

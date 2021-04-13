@@ -18,6 +18,7 @@ class ApiInstallPerm extends Migration
         $table->id('install_id');
         $table->unsignedBigInteger('client_id');
         $table->foreign('client_id')->references('client_id')->on('Api_Clients');
+        $table->string('structure');
         $table->boolean('members_read');
         $table->boolean('members_write');
         $table->boolean('members_add');
@@ -28,6 +29,7 @@ class ApiInstallPerm extends Migration
         $table->boolean('payment_schedules_read');
         $table->boolean('payment_schedules_write');
         $table->boolean('payment_day_read');
+        $table->timestamps();
         });
     }
 
