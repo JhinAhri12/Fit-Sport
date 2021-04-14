@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<style media="screen">
-  .pagination {
-    padding-left: 660px;
-  }
-</style>
 
 <div class="card">
   <div class="card-body">
@@ -40,7 +35,7 @@
     </div>
   <div class="form-group row text-center">
     <div class="col-sm-4">
-      <button type="button" class="btn btn-primary" id="searchBtn" name="searchBtn">Rechercher</button>
+      <button type="button" class="btn btn-primary" id="searchBtn" name="searchBtn"><span class="fas fa-search"></span> Rechercher</button>
     </div>
   </div></div></div>
 </form><br><br>
@@ -63,13 +58,16 @@
                 Etat : Inactif
                 <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-primary" value="Activer"><br>
               @endif
-                <a href="/show_partenaire?id={{$client->client_id}}"class="btn btn-info">Consulter</a><br><br>
+                <a href="/show_partenaire?id={{$client->client_id}}"class="btn btn-info"><span class="fas fa-search"></span> Consulter</a><br><br>
             </div>
           </div>
         </div>
     @endforeach
+    <div class="col-sm-12 text-center">
+      <center>{{ $clients->links() }}</center>
+    </div>
   </div>
-  {{ $clients->links() }}
+
   </div><br><br>
 
 

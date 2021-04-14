@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="refreshUpdate">
-&nbsp;&nbsp;<a href="/partenaire" class="btn btn-info"> Retour à la liste des partenaires</a><br><br>
+&nbsp;&nbsp;<a href="/partenaire" class="btn btn-info"><span class="fas fa-arrow-circle-left"></span> Retour à la liste des partenaires</a><br><br>
 
 
 <div id="modalAdd" class="modal" tabindex="-1" role="dialog">
@@ -62,10 +62,10 @@
     </div>
     <div class="row">
     <div class="col-sm-6 text-center">
-      <a style="margin-bottom: :30px" href="/viewEmail?nom={{ $client->client_name }}"  class="btn btn-danger">Consulter l'Email</a>
+      <a style="margin-bottom: :30px" href="/viewEmail?nom={{ $client->client_name }}"  class="btn btn-danger"><span class="fas fa-envelope"></span> Consulter l'Email</a>
     </div>
     <div class="col-sm-6 text-center">
-      <button style="margin-bottom:30px" id="add" class="btn btn-success">Ouvrir l'accès à un club</button>
+      <button style="margin-bottom:30px" id="add" class="btn btn-success"><span class="fas fa-plus-circle"></span> Ouvrir l'accès à un club</button>
     </div>
       <div class="col-sm-12 text-center">
         @foreach ($clients as $client)
@@ -103,7 +103,7 @@
         @endif
       </div>
       <div class="col-sm-6 text-center">
-        <button id="update{{$grant->install_id}}" name="updatePerm" type="button" class="btn btn-info" name="button">Afficher les Permissions</button>
+        <button id="update{{$grant->install_id}}" name="updatePerm" type="button" class="btn btn-info" name="button"><span class="fas fa-search"></span> Afficher les Permissions</button>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
 
     </div>
     <div class="col-sm-3 text-center">
-      <a href="/show_partenaire?id={{$install->client_id}}" class="btn btn-info"> Retour à la liste des clubs</a><br><br>
+      <a href="/show_partenaire?id={{$install->client_id}}" class="btn btn-info"><span class="fas fa-arrow-circle-left"></span> Retour à la liste des clubs</a><br><br>
     </div>
   <div class="col-sm-12 text-center">
     Id : {{$install->install_id}} &nbsp;&nbsp; Club : {{$install->structure}}

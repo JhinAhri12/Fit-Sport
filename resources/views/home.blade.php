@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('Vous êtes connecter !') }}<br><br>
+                    <a href="/partenaire" class="btn btn-info" type="button" name="button">Accéder au backend</a>
                 </div>
             </div>
         </div>
