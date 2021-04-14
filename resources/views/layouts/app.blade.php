@@ -48,7 +48,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}"><span class="fas fa-sign-in-alt"></span> {{ __('Login') }}</a>
+                                <a style="color:white;" class="nav-link" href="{{ route('login') }}"><span class="fas fa-sign-in-alt"></span> {{ __('Login') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
