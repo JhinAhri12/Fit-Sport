@@ -2,7 +2,9 @@
 
 @section('content')
 
+<div class="refreshUpdate">
 &nbsp;&nbsp;<a href="/partenaire" class="btn btn-info"> Retour à la liste des partenaires</a><br><br>
+
 
 <div id="modalAdd" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
@@ -37,8 +39,6 @@
     </div>
   </div>
 </div>
-
-<div id="refresh1">
 
 <div class="card">
   <div class="card-body">
@@ -84,12 +84,12 @@
 
 <br><br>
 
-<div id="Refresh">
-<div class="card" id="Permissions">
+
+@foreach ($grants as $grant)
+<div class="card" id="PermissionsChange">
   <div class="card-body">
     <div class="row">
-      @foreach ($grants as $grant)
-      <div class="col-sm-4 text-center">
+      <div class="col-sm-6 text-center">
         id client : {{ $grant->client_id }}
         install id : {{ $grant->install_id }}
         branch id : {{ $grant->branch_id }}<br><br>
@@ -102,105 +102,105 @@
           <input type="submit" id="toggleB{{ $grant->branch_id }}" name="toggleB" class="btn btn-primary" value="Activer"><br>
         @endif
       </div>
-        <div class="col-sm-4 text-center">
-
-        </div>
-        <div class="col-sm-4 text-center">
-
-        </div>
-      @endforeach
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-<div class="card" id="PermissionsChange">
-  <div class="card-body">
-    <div class="row">
-      @foreach ($installs as $install)
-        <input type="text" id="Idinstall" value="{{ $install->install_id }}" hidden>
       <div class="col-sm-6 text-center">
-        @if ($install->members_read == 0)
-          Etat : Actif
-          <input type="submit" id="members_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-        @else
-          Etat : Inactif
-          <input type="submit" id="members_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-        @endif
-        @if ($install->members_write == 0)
-          Etat : Actif
-          <input type="submit" id="members_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-        @else
-          Etat : Inactif
-          <input type="submit" id="members_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-        @endif
-        @if ($install->members_add == 0)
-          Etat : Actif
-          <input type="submit" id="members_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-        @else
-          Etat : Inactif
-          <input type="submit" id="members_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-        @endif
-        @if ($install->members_product_add == 0)
-          Etat : Actif
-          <input type="submit" id="members_product_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-        @else
-          Etat : Inactif
-          <input type="submit" id="members_product_add{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-        @endif
-        @if ($install->members_payment_schedules_read == 0)
-          Etat : Actif
-          <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-        @else
-          Etat : Inactif
-          <input type="submit" id="members_payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-        @endif
+        <button id="update{{$grant->install_id}}" name="updatePerm" type="button" class="btn btn-info" name="button">Afficher les Permissions</button>
       </div>
-        <div class="col-sm-6 text-center">
-          @if ($install->members_statistiques_read == 0)
-            Etat : Actif
-            <input type="submit" id="members_statistiques_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-          @else
-            Etat : Inactif
-            <input type="submit" id="members_statistiques_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-          @endif
-          @if ($install->members_subscription_read == 0)
-            Etat : Actif
-            <input type="submit" id="members_subscription_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-          @else
-            Etat : Inactif
-            <input type="submit" id="members_subscription_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-          @endif
-          @if ($install->members_payment_schedules_read == 0)
-            Etat : Actif
-            <input type="submit" id="payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-          @else
-            Etat : Inactif
-            <input type="submit" id="payment_schedules_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-          @endif
-          @if ($install->payment_schedules_write == 0)
-            Etat : Actif
-            <input type="submit" id="payment_schedules_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-          @else
-            Etat : Inactif
-            <input type="submit" id="payment_schedules_write{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-          @endif
-          @if ($install->payment_day_read == 0)
-            Etat : Actif
-            <input type="submit" id="payment_day_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Désactiver"><br><br>
-          @else
-            Etat : Inactif
-            <input type="submit" id="payment_day_read{{ $install->install_id }}" name="toggleC" class="btn btn-primary" value="Activer"><br><br>
-          @endif
-        </div>
-      @endforeach
     </div>
   </div>
-  </div>
-</div>
-</div>
+</div><br><br>
+@endforeach
 
+  @if(!empty($installs))
+  <div id="modalUpdate">
+    <form class="" action="/update_install_bool" method="get">
+    <div class="row">
+        @csrf
+  @foreach ($installs as $install)
+    <div class="col-sm-9 text-center">
+
+    </div>
+    <div class="col-sm-3 text-center">
+      <a href="/show_partenaire?id={{$install->client_id}}" class="btn btn-info"> Retour à la liste des clubs</a><br><br>
+    </div>
+  <div class="col-sm-12 text-center">
+    Id : {{$install->install_id}} &nbsp;&nbsp; Club : {{$install->structure}}
+  </div>
+  <div class="col-sm-6 text-center">
+    <input type="text" name="id" value="{{$install->install_id}}" hidden>
+    <input type="text" name="idCli" value="{{$install->client_id}}" hidden>
+    members_read :
+    @if ($install->members_read == 0)
+      <input type="submit" name="members_read" class="btn btn-primary" value="Activer"><br><br>
+    @else
+      <input type="submit" name="members_read" class="btn btn-primary" value="Désactiver"><br><br>
+    @endif
+    members_write :
+    @if ($install->members_write == 0)
+      <input type="submit" name="members_write" class="btn btn-primary" value="Activer"><br><br>
+    @else
+      <input type="submit" name="members_write" class="btn btn-primary" value="Désactiver"><br><br>
+    @endif
+    members_add :
+    @if ($install->members_add == 0)
+      <input type="submit" name="members_add" class="btn btn-primary" value="Activer"><br><br>
+    @else
+      <input type="submit" name="members_add" class="btn btn-primary" value="Désactiver"><br><br>
+    @endif
+    members_product_add :
+    @if ($install->members_product_add == 0)
+      <input type="submit" name="members_product_add" class="btn btn-primary" value="Activer"><br><br>
+    @else
+      <input type="submit" name="members_product_add" class="btn btn-primary" value="Désactiver"><br><br>
+    @endif
+    members_payment_schedules_read :
+    @if ($install->members_payment_schedules_read == 0)
+      <input type="submit" name="members_payment_schedules_read" class="btn btn-primary" value="Activer"><br><br>
+    @else
+      <input type="submit" name="members_payment_schedules_read" class="btn btn-primary" value="Désactiver"><br><br>
+    @endif
+  </div>
+    <div class="col-sm-6 text-center">
+      members_statistiques_read :
+      @if ($install->members_statistiques_read == 0)
+        <input type="submit" name="members_statistiques_read" class="btn btn-primary" value="Activer"><br><br>
+      @else
+        <input type="submit" name="members_statistiques_read" class="btn btn-primary" value="Désactiver"><br><br>
+      @endif
+      members_subscription_read :
+      @if ($install->members_subscription_read == 0)
+        <input type="submit" name="members_subscription_read" class="btn btn-primary" value="Activer"><br><br>
+      @else
+        <input type="submit" name="members_subscription_read" class="btn btn-primary" value="Désactiver"><br><br>
+      @endif
+      members_payment_schedules_read :
+      @if ($install->members_payment_schedules_read == 0)
+        <input type="submit" name="members_payment_schedules_read" class="btn btn-primary" value="Activer"><br><br>
+      @else
+        <input type="submit" name="members_payment_schedules_read" class="btn btn-primary" value="Désactiver"><br><br>
+      @endif
+      payment_schedules_write :
+      @if ($install->payment_schedules_write == 0)
+        <input type="submit" name="payment_schedules_write" class="btn btn-primary" value="Activer"><br><br>
+      @else
+        <input type="submit" name="payment_schedules_write" class="btn btn-primary" value="Désactiver"><br><br>
+      @endif
+      payment_day_read :
+      @if ($install->payment_day_read == 0)
+        <input type="submit" name="payment_day_read" class="btn btn-primary" value="Activer"><br><br>
+      @else
+        <input type="submit" name="payment_day_read" class="btn btn-primary" value="Désactiver"><br><br>
+      @endif
+    </div>
+  @endforeach
+  </div>
+  </form>
+</div>
+@else
+<div id="modalUpdate">
+</div>
+@endif
+
+</div>
 @endsection
 
 @section('script')
@@ -217,6 +217,25 @@
 
     });
 
+    $("button[name='updatePerm']").click(function(){
+
+      var stirngidBrh = $(this).attr('id');
+      var idBrh = stirngidBrh.split('update');
+      var idBh = idBrh[1];
+
+      var idCli = Number($('#Idclient').val());
+
+      $.ajax({
+      method: "GET",
+      url: "/show_partenaire",
+      data: { id: idCli, idBh: idBrh[1] },
+      success: function(data){
+        $("#modalUpdate").load("/show_partenaire?id="+idCli+"&idBh="+idBh+"/" + " #modalUpdate");
+
+      }
+      });
+    });
+
     $("#create").click(function(){
       var club = $("input[name='nom_club']").val()
 
@@ -227,7 +246,6 @@
       else {
         $('#formCreate').submit();
       }
-
     });
 
     $("#cancel").click(function(){
@@ -253,7 +271,7 @@
       {
         boolC = 1;
       }
-
+      console.log(id,boolC,champC);
       $.ajax({
       method: "GET",
       url: "/update_install_bool",

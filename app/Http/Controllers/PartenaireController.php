@@ -33,20 +33,41 @@ class PartenaireController extends Controller
     public function show(Request $request)
     {
       $ids = (int) $request->id;
+      $idbr = (int) $request->idBh;
 
-      $installs = DB::table('api_install_perm')
-      ->select('*')
-      ->where('client_id','=',$ids)->get();
+      //dd($idbr);
+      if(!empty($idbr))
+      {
+        $installs = DB::table('api_install_perm')
+        ->select('*')
+        ->where('install_id','=',$idbr)->get();
 
-      $clients =  DB::table('api_clients')
-      ->select('*')
-      ->where('client_id','=',$ids)->get();
+        $clients =  DB::table('api_clients')
+        ->select('*')
+        ->where('client_id','=',$ids)->get();
 
-      $grants  = DB::table('api_client_grants')
-      ->select('*')
-      ->where('client_id','=',$ids)->get();
+        $grants  = DB::table('api_client_grants')
+        ->select('*')
+        ->where('client_id','=',$ids)
+        ->where('install_id','=',$idbr)
+        ->get();
 
-      return view('partenaire.show')->with(compact('installs','clients','grants'));
+        return view('partenaire.show')->with(compact('installs','clients','grants'));
+      }
+      else {
+
+        $clients =  DB::table('api_clients')
+        ->select('*')
+        ->where('client_id','=',$ids)->get();
+
+        $grants  = DB::table('api_client_grants')
+        ->select('*')
+        ->where('client_id','=',$ids)->get();
+
+        return view('partenaire.show')->with(compact('installs','clients','grants'));
+      }
+
+
     }
 
     public function create(Request $request)
@@ -93,12 +114,44 @@ class PartenaireController extends Controller
     public function updateInstallBool(Request $request)
     {
       $id = (int) $request->id;
-      $bool = (int) $request->bool;
-      $stringChamp = preg_split('/\d/',$request->champ[0]);
-      $champ = $stringChamp[0];
+      $idCli = (int) $request->idCli;
+      $tabChamp = array("members_read","members_write","members_add","members_product_add","members_payment_schedules_read","members_statistiques_read","members_subscription_read","payment_schedules_read","payment_schedules_write","payment_day_read");
 
-      $updateClient = DB::table('api_install_perm')
-      ->where('install_id', $id)
-      ->update([$champ => $bool]);
+      foreach ($tabChamp as $tc)
+      {
+        if($request->$tc)
+        {
+          $bool = $request->$tc;
+          if($bool == 'Désactiver')
+          {
+            $updateClient = DB::table('api_install_perm')
+            ->where('install_id', $id)
+            ->update([$tc => 0]);
+          }
+          else
+          {
+            $updateClient = DB::table('api_install_perm')
+            ->where('install_id', $id)
+            ->update([$tc => 1]);
+          }
+        }
+      }
+
+      $installs = DB::table('api_install_perm')
+      ->select('*')
+      ->where('install_id','=',$id)->get();
+
+      $clients =  DB::table('api_clients')
+      ->select('*')
+      ->where('client_id','=',$idCli)->get();
+
+      $grants  = DB::table('api_client_grants')
+      ->select('*')
+      ->where('client_id','=',$idCli)
+      ->where('install_id','=',$id)
+      ->get();
+
+      return view('partenaire.show')->with(compact('installs','clients','grants'));
+
     }
 }
