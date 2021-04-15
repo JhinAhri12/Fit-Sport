@@ -29,7 +29,7 @@
               </textarea>
             </div>
           </div>
-          <input type="text" name="client_id" value="">
+          <input type="text" name="client_id" value="" hidden>
         </form>
       </div>
       <div class="modal-footer">
@@ -53,7 +53,7 @@
           Description : {{ $client->full_description }}<br><br>
         </div>
         <div class="col-sm-4 text-center">
-          Site web : {{ $client->url }}<br><br>
+          Site web : <a href="{{ $client->url }}">{{ $client->url }}</a><br><br>
           Dpo : {{ $client->dpo }}<br><br>
           Technique : {{ $client->technical_contact }}<br><br>
           Commercial : {{ $client->commercial_contact }}<br><br>
@@ -62,7 +62,8 @@
     </div>
     <div class="row">
     <div class="col-sm-6 text-center">
-      <a style="margin-bottom: :30px" href="/viewEmail?nom={{ $client->client_name }}"  class="btn btn-danger"><span class="fas fa-envelope"></span> Consulter l'Email</a>
+      <a style="margin-bottom: :30px" target="_blank" href="/viewEmail?nom={{ $client->client_name }}"  class="btn btn-info"><span class="fas fa-envelope"></span> Consulter l'Email</a><br><br>
+      <a style="margin-bottom: :30px" target="_blank" href="/sendEmail"  class="btn btn-danger"><span class="fas fa-envelope"></span> Envoyer l'Email</a>
     </div>
     <div class="col-sm-6 text-center">
       <button style="margin-bottom:30px" id="add" class="btn btn-success"><span class="fas fa-plus-circle"></span> Ouvrir l'accès à un club</button>
@@ -70,10 +71,8 @@
       <div class="col-sm-12 text-center">
         @foreach ($clients as $client)
           @if ($client->active == 0)
-            Etat : Actif
             <input type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-secondary" value="Désactiver"><br>
           @else
-            Etat : Inactif
             <input type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-primary" value="Activer"><br>
           @endif
         @endforeach
@@ -95,10 +94,8 @@
         branch id : {{ $grant->branch_id }}<br><br>
         <input type="text" id="Idbranch" value="{{ $grant->branch_id }}" hidden>
         @if ($grant->active == 0)
-          Etat : Actif
           <input type="submit" id="toggleB{{ $grant->branch_id }}" name="toggleB" class="btn btn-primary" value="Désactiver"><br>
         @else
-          Etat : Inactif
           <input type="submit" id="toggleB{{ $grant->branch_id }}" name="toggleB" class="btn btn-primary" value="Activer"><br>
         @endif
       </div>

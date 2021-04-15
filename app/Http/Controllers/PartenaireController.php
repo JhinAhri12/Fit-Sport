@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Mail;
 
 class PartenaireController extends Controller
 {
@@ -16,10 +17,18 @@ class PartenaireController extends Controller
       {
         $id = $request['id'];
         $nom = $request['nom'];
-        $bool = (int) $request['bool'];
+        $bool = $request['bool'];
 
-        $clients = DB::table('api_clients')->orWhere('client_id', '=', $id)
-        ->orWhere('client_name', '=', $nom)->orWhere('active', '=', $bool)->paginate(6);
+        if($bool == 'nil')
+        {
+          $bool = 'is null';
+          $clients = DB::table('api_clients')->orWhere('client_id', '=', $id)
+          ->orWhere('client_name', '=', $nom)->orWhereNull('active', $bool)->paginate(6);
+        }
+        else {
+          $clients = DB::table('api_clients')->where('client_id', '=', $id)
+          ->orWhere('client_name', '=', $nom)->orWhere('active', $bool)->paginate(6);
+        }
 
         return view('partenaire.index')->with(compact('clients'));
       }
@@ -88,7 +97,15 @@ class PartenaireController extends Controller
       $createGrants = DB::table('api_client_grants')
       ->insert(['install_id'=> $selectLastID->install_id,'client_id' => $client,'perms' => $perms,'active'=>0]);
 
+      $data = array('name'=>"Fit-Sport",'client'=>$client);
 
+      Mail::send(['text'=>'mailcre'], $data, function($message) {
+         $message->to('abc@gmail.com', 'client')->subject
+            ('Création de votre club !');
+         $message->from('xyz@gmail.com','name');
+      });
+
+      return redirect()->back()->with(['message' => 'Le club à bien été créer !']);
     }
 
     public function updatePartenaireBool(Request $request)

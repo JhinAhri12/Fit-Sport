@@ -34,8 +34,8 @@
       </div>
     </div>
   <div class="form-group row text-center">
-    <div class="col-sm-4">
-      <button type="button" class="btn btn-primary" id="searchBtn" name="searchBtn"><span class="fas fa-search"></span> Rechercher</button>
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-success" id="searchBtn" name="searchBtn"><span class="fas fa-search"></span> Rechercher</button>&nbsp;&nbsp;<a style="color:white;" href="/partenaire" class="btn btn-warning"><span class="fas fa-ban"></span> Annuler la recherche</a>
     </div>
   </div></div></div>
 </form><br><br>
@@ -50,12 +50,10 @@
               Id: {{ $client->client_id }}<br>
               Nom: {{ $client->client_name }}<br>
               Description : {{ $client->short_description }}<br>
-              Site : {{ $client->url }}<br>
+              Site web : <a href="{{ $client->url }}">{{ $client->url }}</a><br>
               @if ($client->active == 0)
-                Etat : Actif
                 <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-secondary" value="Désactiver"><br>
               @else
-                Etat : Inactif
                 <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-primary" value="Activer"><br>
               @endif
                 <a href="/show_partenaire?id={{$client->client_id}}"class="btn btn-info"><span class="fas fa-search"></span> Consulter</a><br><br>
@@ -148,7 +146,7 @@
       method: "GET",
       url: "/partenaire/"+id+"/"+nom+"/"+bool+"/",
       success: function(data){
-        $("#client").load("/partenaire/"+id+"/"+nom+"/"+bool+"/" + " #client");
+        window.open("/partenaire/"+id+"/"+nom+"/"+bool+"/", '_parent');
       }
 
     });
