@@ -77,6 +77,10 @@ class PartenaireController extends Controller
         ->select('*')
         ->where('client_id','=',$ids)->get();
 
+        $installs = DB::table('api_install_perm')
+        ->select('*')
+        ->where('client_id','=',$ids)->get();
+
         return view('partenaire.show')->with(compact('installs','clients','grants'));
       }
 
