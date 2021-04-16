@@ -2,6 +2,7 @@
 
 @section('content')
 
+<!-- Zone recherche -->
 <div class="card">
   <div class="card-body">
   <div class="row">
@@ -27,7 +28,8 @@
     </div>
   </div>
     <div class="form-group row text-center">
-      <div class="col-sm-6">
+    <label for="inputNom" class="col-sm-2 col-form-label">Statut : </label>
+      <div class="col-sm-2">
         <button type="button" id="actif" name="actif" class="btn btn-primary">Activé</button>
         <button type="button" id="inactif" name="inactif" class="btn btn-secondary">Désactivé</button>
         <input type="hidden" class="form-control" id="inputBool" name="inputBool" value="">
@@ -35,11 +37,13 @@
     </div>
   <div class="form-group row text-center">
     <div class="col-sm-6">
+      <!-- Bouton recherche && annuler la recherche -->
       <button type="button" class="btn btn-success" id="searchBtn" name="searchBtn"><span class="fas fa-search"></span> Rechercher</button>&nbsp;&nbsp;<a style="color:white;" href="/partenaire" class="btn btn-warning"><span class="fas fa-ban"></span> Annuler la recherche</a>
     </div>
-  </div></div></div>
-</form><br><br>
+  </div></form></div></div>
+<br><br>
 
+<!-- Zone d'affichage pour UN client -->
 <div class="container"id="client" name="client">
     <div class="row">
     @foreach ($clients as $client)
@@ -51,6 +55,7 @@
               Nom: {{ $client->client_name }}<br>
               Description : {{ $client->short_description }}<br>
               Site web : <a href="{{ $client->url }}">{{ $client->url }}</a><br>
+              <!-- Toggle pour activer ou désactiver -->
               @if ($client->active == 0)
                 <input style="margin-bottom:5px;" type="submit" id="toggleA{{ $client->client_id }}" name="toggleA" class="btn btn-secondary" value="Désactiver"><br>
               @else
@@ -62,48 +67,52 @@
         </div>
     @endforeach
     <div class="col-sm-12 text-center">
+      <!-- Pagination -->
       <center>{{ $clients->links() }}</center>
     </div>
   </div>
 
-  </div><br><br>
-
-
-
+</div><br><br>
 @endsection
 
 @section('script')
 <script type="text/javascript">
   $(document).ready(function(){
 
+    // si on appuie sur un bouton état on change active
     $("input[name='toggleA']").click(function(){
-      var stringA = $(this).attr('id');
-      var selectorA = '#'+stringA
-      var stringidA = stringA.split('toggleA');
-      var idA = stringidA[1];
-      var valueA = $(selectorA).val();
-      var boolA = '';
+        var stringA = $(this).attr('id');
+        var selectorA = '#'+stringA
+        var stringidA = stringA.split('toggleA');
+        var idA = stringidA[1];
+        var valueA = $(selectorA).val();
+        var boolA = '';
 
-      if(valueA === 'Activer')
-      {
-        boolA = 0;
-      }
-      else
-      {
-        boolA = 1;
-      }
+        if(valueA === 'Activer')
+        {
+          boolA = 0;
+          var c = confirm("Êtes vous certain de désactiver ce client et tout ses clubs ?");
+        }
+        else
+        {
+          boolA = 1;
+          var c = confirm("Êtes vous certain d'activer ce client et tout ses clubs ?");
+        }
 
-      $.ajax({
-      method: "GET",
-      url: "/update_partenaire_bool",
-      data: { id: idA, bool: boolA },
-      success: function(data){
-        location.reload();
+        if(c === true)
+        {
+          $.ajax({
+          method: "GET",
+          url: "/update_partenaire_bool",
+          data: { id: idA, bool: boolA },
+          success: function(data){
+            location.reload();
+          }
+        });
       }
-      });
-
     });
 
+// on met en valeur si un bouton est appuyé pour la recherche et on met en blanc l'autre
     $("#actif").click(function(){
       var selected = $(this).attr("class");
       $(this).removeClass(selected);
@@ -115,6 +124,7 @@
       $('#inputBool').val(0);
     });
 
+// on met en valeur si un bouton est appuyé pour la recherche et on met en blanc l'autre
     $("#inactif").click(function(){
       var selected = $(this).attr("class");
       $(this).removeClass(selected);
@@ -126,6 +136,7 @@
       $('#inputBool').val(1);
     });
 
+// Si on appuie sur le bouton de recherche on lance une requete et on ouvre le résulat dans la même fenêtre
     $("#searchBtn").click(function(){
       var id = $("#inputId").val();
       var nom = $("#inputNom").val();
@@ -150,8 +161,7 @@
       }
 
     });
-
-    });
   });
+});
 </script>
 @endsection

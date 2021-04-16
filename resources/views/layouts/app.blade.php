@@ -16,8 +16,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-    <!-- Fonts -->
-
 </head>
 <body>
   <style media="screen">
@@ -38,11 +36,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
-
-
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar navbar-expand-lg navbar-dark bg-dark">
                         <!-- Authentication Links -->
@@ -75,11 +69,12 @@
         </nav>
 
         <main class="py-4">
-          @if(session()->has('message'))
-            <div class="alert alert-info">
-                {{ session('message') }}
-            </div>
-         @endif
+          <!-- Pour afficher les notifications -->
+            @if(session()->has('message'))
+              <div class="alert alert-info">
+                  {{ session('message') }}
+              </div>
+            @endif
             @yield('content')
         </main>
     </div>

@@ -2,10 +2,11 @@
 
 @section('content')
 
+<!-- Pour revenir a la page d'accueil -->
 <div class="refreshUpdate">
 &nbsp;&nbsp;<a href="/partenaire" class="btn btn-info"><span class="fas fa-arrow-circle-left"></span> Retour à la liste des partenaires</a><br><br>
 
-
+<!-- Modal pour ajouter un club -->
 <div id="modalAdd" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -43,6 +44,7 @@
 <div class="card">
   <div class="card-body">
     <div class="row">
+      <!-- Pour afficher un client -->
       @foreach ($clients as $client)
       <div class="col-sm-4 text-center">
         <img src="{{ $client->logo_url }}" alt="" width="50%">
@@ -80,10 +82,9 @@
     </div>
   </div>
 </div>
-
 <br><br>
 
-
+<!-- Pour les droits -->
 @foreach ($grants as $grant)
 <div class="card" id="PermissionsChange">
   <div class="card-body">
@@ -107,6 +108,7 @@
 </div><br><br>
 @endforeach
 
+<!-- Afficher les droits pour UN club -->
   @if(!empty($installs))
   <div id="modalUpdate">
     <form class="" action="/update_install_bool" method="get">
@@ -114,7 +116,6 @@
         @csrf
   @foreach ($installs as $install)
     <div class="col-sm-9 text-center">
-
     </div>
     <div class="col-sm-3 text-center">
       <a href="/show_partenaire?id={{$install->client_id}}" class="btn btn-info"><span class="fas fa-arrow-circle-left"></span> Retour à la liste des clubs</a><br><br>
@@ -211,11 +212,9 @@
       $("input[name='branch_id']").val(idBrh);
 
       $('#modalAdd').toggle();
-
     });
 
     $("button[name='updatePerm']").click(function(){
-
       var stirngidBrh = $(this).attr('id');
       var idBrh = stirngidBrh.split('update');
       var idBh = idBrh[1];
@@ -228,8 +227,7 @@
       data: { id: idCli, idBh: idBrh[1] },
       success: function(data){
         $("#modalUpdate").load("/show_partenaire?id="+idCli+"&idBh="+idBh+"/" + " #modalUpdate");
-
-      }
+        }
       });
     });
 
@@ -249,37 +247,8 @@
       $('#modalAdd').fadeOut();
     });
 
-
-    $("input[name='toggleC']").click(function(){
-      var stringC = $(this).attr('id');
-      var selectorC= '#'+stringC
-      var stringidC = stringC.split('toggleC');
-      var champC = stringC.split('#');
-      var idC = stringidC[1];
-      var valueC = $(selectorC).val();
-      var boolC = '';
-      var id = Number($('#Idinstall').val());
-
-      if(valueC === 'Activer')
-      {
-        boolC = 0;
-      }
-      else
-      {
-        boolC = 1;
-      }
-      console.log(id,boolC,champC);
-      $.ajax({
-      method: "GET",
-      url: "/update_install_bool",
-      data: { id: id, bool: boolC, champ : champC },
-      success: function(data){
-        location.reload();
-      }
-      });
-    });
-
     $("input[name='toggleB']").click(function(){
+
       var stringB = $(this).attr('id');
       var selectorB = '#'+stringB
       var stringidB = stringB.split('toggleB');
@@ -291,12 +260,15 @@
       if(valueB === 'Activer')
       {
         boolB = 0;
+        var c = confirm("Êtes vous certain d'activer ce club ?");
       }
       else
       {
         boolB = 1;
+        var c = confirm("Êtes vous certain de désactiver ce club ?");
       }
-
+      if(c === true)
+      {
       $.ajax({
       method: "GET",
       url: "/update_grant_bool",
@@ -305,35 +277,42 @@
         location.reload();
       }
       });
+    }
     });
 
     $("input[name='toggleA']").click(function(){
-      var stringA = $(this).attr('id');
-      var selectorA = '#'+stringA
-      var stringidA = stringA.split('toggleA');
-      var idA = stringidA[1];
-      var valueA = $(selectorA).val();
-      var boolA = '';
 
-      if(valueA === 'Activer')
-      {
-        boolA = 0;
-      }
-      else
-      {
-        boolA = 1;
-      }
+        var stringA = $(this).attr('id');
+        var selectorA = '#'+stringA
+        var stringidA = stringA.split('toggleA');
+        var idA = stringidA[1];
+        var valueA = $(selectorA).val();
+        var boolA = '';
 
-      $.ajax({
-      method: "GET",
-      url: "/update_partenaire_bool",
-      data: { id: idA, bool: boolA },
-      success: function(data){
-        location.reload();
+        if(valueA === 'Activer')
+        {
+          boolA = 0;
+         var c = confirm("Êtes vous certain d'activer ce client et tout ses clubs ?");
+        }
+        else
+        {
+          boolA = 1;
+          var c = confirm("Êtes vous certain de désactiver ce client et tout ses clubs ?");
+        }
+
+        if(c === true)
+        {
+
+        $.ajax({
+        method: "GET",
+        url: "/update_partenaire_bool",
+        data: { id: idA, bool: boolA },
+        success: function(data){
+          location.reload();
+        }
+        });
       }
       });
-    });
-
   });
 </script>
 @endsection

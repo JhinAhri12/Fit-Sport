@@ -15,6 +15,7 @@
                     @endif
 
                     {{ __('Vous êtes connecter !') }}<br><br>
+                    <!-- Pour accéder au backend -->
                     <a href="/partenaire" class="btn btn-info" type="button" name="button">Accéder au backend</a>
                 </div>
             </div>
