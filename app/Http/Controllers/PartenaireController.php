@@ -131,6 +131,17 @@ class PartenaireController extends Controller
       ->update(['active' => $bool]);
     }
 
+// met a jour un club activé ou désactiver
+    public function updateGrantBool(Request $request)
+    {
+      $id = (int) $request->id;
+      $bool = (int) $request->bool;
+
+      $updateClient = DB::table('api_client_grants')
+      ->where('branch_id', $id)
+      ->update(['active' => $bool]);
+    }
+
 // on met a jour les champs actif ou non d'un Club
     public function updateInstallBool(Request $request)
     {
