@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Str;
-
+$DATABASE_URL=parse_url("mysql://uefv8gbf38wo7em6:voebdd2l0hodshxw@yvu4xahse0smimsc.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/c4sizvgmjfj2tak9");
 return [
 
-  $DATABASE_URL=parse_url("mysql://uefv8gbf38wo7em6:voebdd2l0hodshxw@yvu4xahse0smimsc.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/c4sizvgmjfj2tak9");
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
